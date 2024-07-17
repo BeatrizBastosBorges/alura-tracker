@@ -22,3 +22,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+> [!NOTE]
+> [Click here to check](https://alura-tracker-git-master-beatriz-bastos-borges-projects.vercel.app) to test.
