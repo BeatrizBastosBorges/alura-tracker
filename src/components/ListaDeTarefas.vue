@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import CronometroTarefa from './CronometroTarefa.vue';
-import ITarefa from '@/interfaces/ITarefas';
+import ITarefa from '@/interfaces/ITarefa';
 import BoxTarefa from './BoxTarefa.vue';
 
 export default defineComponent({
