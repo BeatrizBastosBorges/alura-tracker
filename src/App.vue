@@ -1,12 +1,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import BarraLateral from './components/BarraLateral.vue';
-import ITarefa from './interfaces/ITarefa';
+import NotificacaoEstado from './components/NotificacaoEstado.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    BarraLateral
+    BarraLateral,
+    NotificacaoEstado
   },
   data() {
     return {
@@ -27,6 +28,7 @@ export default defineComponent({
       <BarraLateral @aoTemaAlterado="trocarTema" />
     </div>
     <div class="column is-three-quarters conteudo">
+      <NotificacaoEstado />
       <router-view></router-view>
     </div>
   </main>

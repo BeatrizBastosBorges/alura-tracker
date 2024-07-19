@@ -1,6 +1,9 @@
 <script lang="ts">
 import { useStore } from '@/store';
 import { defineComponent } from 'vue';
+import { ADICIONA_PROJETO, ALTERA_PROJETO } from "@/store/tipo-mutacoes";
+import { TipoNotificacao } from '@/interfaces/INotificacao';
+import useNotificador from '@/hooks/notificador'
 
 export default defineComponent({
     name: 'FormularioProjeto',
@@ -23,23 +26,24 @@ export default defineComponent({
     methods: {
         salvar() {
             if (this.id) {
-                this.store.commit('ALTERA_PROJETO', {
+                this.store.commit(ALTERA_PROJETO, {
                     id: this.id,
                     nome: this.nomeDoProjeto
                 })
             } else {
-                this.store.commit('ADICIONA_PROJETO', this.nomeDoProjeto)
+                this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
             }
             
             this.nomeDoProjeto = ""
+            this.notificar(TipoNotificacao.SUCESSO, 'Exelente!', 'O projeto foi cadastrado com sucesso!')
             this.$router.push('/projetos')
         }
     },
     setup() {
         const store = useStore()
-        return {
-            store
-        }
+        const { notificar } = useNotificador()
+
+        return { store, notificar }
     }
 })
 </script>
