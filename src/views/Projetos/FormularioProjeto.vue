@@ -1,9 +1,9 @@
 <script lang="ts">
 import { useStore } from '@/store';
 import { defineComponent } from 'vue';
-import { ADICIONA_PROJETO, ALTERA_PROJETO } from "@/store/tipo-mutacoes";
 import { TipoNotificacao } from '@/interfaces/INotificacao';
 import useNotificador from '@/hooks/notificador'
+import { ALTERAR_PROJETO, CADASTRAR_PROJETO } from '@/store/tipo-acoes';
 
 export default defineComponent({
     name: 'FormularioProjeto',
@@ -26,14 +26,16 @@ export default defineComponent({
     methods: {
         salvar() {
             if (this.id) {
-                this.store.commit(ALTERA_PROJETO, {
+                this.store.dispatch(ALTERAR_PROJETO, {
                     id: this.id,
                     nome: this.nomeDoProjeto
-                })
+                }).then(() => this.lidarComSucesso())
             } else {
-                this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
+                this.store.dispatch(CADASTRAR_PROJETO, this.nomeDoProjeto)
+                    .then(() => this.lidarComSucesso())
             }
-            
+        },
+        lidarComSucesso() {
             this.nomeDoProjeto = ""
             this.notificar(TipoNotificacao.SUCESSO, 'Exelente!', 'O projeto foi cadastrado com sucesso!')
             this.$router.push('/projetos')
@@ -55,12 +57,7 @@ export default defineComponent({
                 <label for="nomeDoProjeto" class="label">
                     Nome do Projeto
                 </label>
-                <input 
-                    type="text" 
-                    class="input" 
-                    v-model="nomeDoProjeto" 
-                    id="nomeDoProjeto"
-                />
+                <input type="text" class="input" v-model="nomeDoProjeto" id="nomeDoProjeto" />
             </div>
             <div class="field">
                 <button class="button" type="submit">

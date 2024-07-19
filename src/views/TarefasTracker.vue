@@ -1,9 +1,10 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import FormularioTarefa from '@/components/FormularioTarefa.vue';
 import ListaDeTarefas from '@/components/ListaDeTarefas.vue';
-import ITarefa from '@/interfaces/ITarefa';
 import BoxTarefa from '@/components/BoxTarefa.vue';
+import { OBTER_TAREFAS } from '@/store/tipo-acoes';
+import { useStore } from '@/store';
 
 export default defineComponent({
     name: 'TarefasTracker',
@@ -12,26 +13,30 @@ export default defineComponent({
         ListaDeTarefas,
         BoxTarefa
     },
-    data() {
-        return {
-            tarefas: [] as ITarefa[]
-        }
-    },
     computed: {
-        listaEstaVazia(): boolean {
-            return this.tarefas.length === 0
-        }
+         listaEstaVazia(): boolean {
+             return this.tarefas.length === 0
+         }
     },
     methods: {
-        salvarTarefa(tarefa: ITarefa) {
-            this.tarefas.push(tarefa)
+        // salvarTarefa(tarefa: ITarefa) {
+        //     this.tarefas.push(tarefa)
+        // }
+    },
+    setup() {
+        const store = useStore()
+        store.dispatch(OBTER_TAREFAS)
+
+        return {
+            tarefas: computed(() => store.state.tarefas),
+            store
         }
     }
 });
 </script>
 
 <template>
-    <FormularioTarefa @aoSalvarTarefa="salvarTarefa" />
+    <FormularioTarefa @aoSalvarTarefa="" />
     <div class="lista">
         <BoxTarefa v-if="listaEstaVazia">
             Você não está muito produtivo hoje
