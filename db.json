@@ -31,6 +31,15 @@
         "id": "1",
         "nome": "Alura Tracker 3.0"
       }
+    },
+    {
+      "id": "a49b",
+      "duracaoEmSegundos": 5,
+      "descricao": "teste",
+      "projeto": {
+        "id": "fa42",
+        "nome": "Estudando padrões de projeto"
+      }
     }
   ]
 }
