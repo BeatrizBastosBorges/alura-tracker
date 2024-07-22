@@ -23,15 +23,6 @@
         "id": "1",
         "nome": "Alura Tracker 3.0"
       }
-    },
-    {
-      "id": "a91e",
-      "duracaoEmSegundos": 5,
-      "descricao": "Estudando diretivas",
-      "projeto": {
-        "id": "1",
-        "nome": "Alura Tracker 3.0"
-      }
     }
   ]
 }
