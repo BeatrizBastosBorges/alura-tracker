@@ -1,13 +1,21 @@
 # alura-tracker
 
-<p align="center"><img src="src/assets/alura-tracker.gif" height="450em"></p>
+O Alura Tracker é um aplicativo web desenvolvido com Vue.js, projetado para ajudar os usuários a gerenciar e acompanhar seus projetos e atividades de forma eficiente. Com uma interface intuitiva e funcionalidades focadas na produtividade, o Alura Tracker permite aos usuários registrar e organizar seus projetos e atividades, bem como monitorar o tempo dedicado a cada tarefa associada a um projeto específico.
+<br>
+## Funcionalidades Principais:
 
-## About
+### 1. Registro de Projetos:
+- Adicionar Projetos: Os usuários podem criar e adicionar novos projetos ao sistema, fornecendo um nome para cada projeto.
+- Gerenciar Projetos: É possível visualizar uma lista de todos os projetos cadastrados e editar ou remover projetos conforme necessário.
 
-Uma aplicação feita para você manter anotar as atividades que você desenvolve durante seu dia, além de descobrir o tempo que você levou para realizala.
+### 2. Registro e Cronometragem de Atividades:
+- Adicionar Atividades: Os usuários podem criar atividades associadas a um projeto específico. Cada atividade deve incluir um título e uma descrição, além de estar vinculada a um projeto existente.
+- Cronometrar Atividades: A funcionalidade de cronometragem permite aos usuários iniciar e parar um cronômetro para cada atividade.
+<br>
 
 > [!NOTE]
 > Click [here](https://alura-tracker-git-master-beatriz-bastos-borges-projects.vercel.app) to check to test.
+<br>
 
 ## Project setup
 ```
