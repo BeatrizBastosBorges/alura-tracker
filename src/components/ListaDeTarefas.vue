@@ -6,19 +6,25 @@ import BoxTarefa from './BoxTarefa.vue';
 
 export default defineComponent({
     name: 'ListaDeTarefas',
+    emits: ['aoTarefaClicada'],
     components: {
         CronometroTarefa,
         BoxTarefa
     },
     props: {
         tarefa: { type: Object as PropType<ITarefa>, required: true }
+    },
+    methods: {
+        tarefaClicada() : void {
+            this.$emit('aoTarefaClicada', this.tarefa)
+        }
     }
 })
 </script>
 
 <template>
     <BoxTarefa>
-        <div class="columns">
+        <div class="columns clicavel" @click="tarefaClicada">
             <div class="column is-4">{{ tarefa.descricao || 'Tarefa sem descrição' }}</div>
 
             <div class="column is-3">
@@ -33,5 +39,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-
+.clicavel {
+    cursor: pointer;
+}
 </style>

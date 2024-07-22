@@ -3,8 +3,9 @@ import { computed, defineComponent } from 'vue';
 import FormularioTarefa from '@/components/FormularioTarefa.vue';
 import ListaDeTarefas from '@/components/ListaDeTarefas.vue';
 import BoxTarefa from '@/components/BoxTarefa.vue';
-import { OBTER_TAREFAS } from '@/store/tipo-acoes';
+import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/tipo-acoes';
 import { useStore } from '@/store';
+import ITarefa from '@/interfaces/ITarefa';
 
 export default defineComponent({
     name: 'TarefasTracker',
@@ -13,19 +14,35 @@ export default defineComponent({
         ListaDeTarefas,
         BoxTarefa
     },
+    data() {
+        return {
+            tarefaSelecionada: null as ITarefa | null
+        }
+    },
     computed: {
          listaEstaVazia(): boolean {
              return this.tarefas.length === 0
          }
     },
     methods: {
-        // salvarTarefa(tarefa: ITarefa) {
-        //     this.tarefas.push(tarefa)
-        // }
+        salvarTarefa(tarefa: ITarefa) {
+            this.store.dispatch(CADASTRAR_TAREFA, tarefa)
+        },
+        selecionarTarefa(tarefa: ITarefa) {
+            this.tarefaSelecionada = tarefa
+        },
+        fecharModal() {
+            this.tarefaSelecionada = null
+        },
+        alterarTarefa() {
+            this.store.dispatch(ALTERAR_TAREFA, this.tarefaSelecionada)
+                .then(() => this.fecharModal())
+        }
     },
     setup() {
         const store = useStore()
         store.dispatch(OBTER_TAREFAS)
+        store.dispatch(OBTER_PROJETOS)
 
         return {
             tarefas: computed(() => store.state.tarefas),
@@ -36,11 +53,42 @@ export default defineComponent({
 </script>
 
 <template>
-    <FormularioTarefa @aoSalvarTarefa="" />
+    <FormularioTarefa @aoSalvarTarefa="salvarTarefa" />
     <div class="lista">
         <BoxTarefa v-if="listaEstaVazia">
             Você não está muito produtivo hoje
         </BoxTarefa>
-        <ListaDeTarefas v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" />
+        <ListaDeTarefas 
+            v-for="(tarefa, index) in tarefas" 
+            :key="index" 
+            :tarefa="tarefa" 
+            @aoTarefaClicada="selecionarTarefa" 
+        />
+
+        <dic class="modal" :class="{ 'is-active': tarefaSelecionada }" v-if="tarefaSelecionada">
+            <div class="modal-background">
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Editando uma tarefa</p>
+                        <button @click="fecharModal" class="delete" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <div class="field">
+                            <label for="descricaoDaTarefa" class="label"> Descrição</label>
+                            <input 
+                                type="text" 
+                                class="input" 
+                                v-model="tarefaSelecionada.descricao" 
+                                id="descricaoDaTarefa"
+                            >
+                        </div>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button @click="alterarTarefa" class="button is-success">Salvar alterações</button>
+                        <button @click="fecharModal" class="button">Cancelar</button>
+                    </footer>
+                </div>
+            </div>
+        </dic>
     </div>
 </template>
