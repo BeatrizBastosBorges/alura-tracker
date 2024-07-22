@@ -6,6 +6,7 @@ import BoxTarefa from '@/components/BoxTarefa.vue';
 import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/tipo-acoes';
 import { useStore } from '@/store';
 import ITarefa from '@/interfaces/ITarefa';
+import { watchEffect } from 'vue';
 
 export default defineComponent({
     name: 'TarefasTracker',
@@ -44,12 +45,20 @@ export default defineComponent({
         store.dispatch(OBTER_TAREFAS)
         store.dispatch(OBTER_PROJETOS)
 
-        const filtro = ref('')
+        const filtro = ref("")
 
-        const tarefas = computed(() => store.state.tarefas. filter(t => !filtro.value || t.descricao.includes(filtro.value)))
+        // const tarefas = computed(() => 
+        //     store.state.tarefa.tarefas.filter(
+        //         (t) => !filtro.value || t.descricao.includes(filtro.value)
+        //     )
+        // )
+
+        watchEffect(() =>{
+            store.dispatch(OBTER_TAREFAS, filtro.value)
+        })
 
         return {
-            tarefas,
+            tarefas: computed(() => store.state.tarefa.tarefas),
             store,
             filtro
         }

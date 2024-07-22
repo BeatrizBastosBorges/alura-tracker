@@ -6,17 +6,19 @@ import { OBTER_PROJETOS, REMOVER_PROJETO } from '@/store/tipo-acoes';
 export default defineComponent({
     name: 'ListaProjeto',
     methods: {
-        excluir(id: string) {
-            this.store.dispatch(REMOVER_PROJETO, id)
-        }
+        
     },
     setup() {
         const store = useStore()
         store.dispatch(OBTER_PROJETOS)
 
+        const excluir = (id: string) => {
+            store.dispatch(REMOVER_PROJETO, id)
+        }
+
         return {
             projetos: computed(() => store.state.projeto.projetos),
-            store
+            excluir
         }
     }
 })
