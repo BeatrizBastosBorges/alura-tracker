@@ -13,10 +13,6 @@ O Alura Tracker é um aplicativo web desenvolvido com Vue.js, projetado para aju
 - Cronometrar Atividades: A funcionalidade de cronometragem permite aos usuários iniciar e parar um cronômetro para cada atividade.
 <br>
 
-> [!NOTE]
-> Click [here](https://alura-tracker-git-master-beatriz-bastos-borges-projects.vercel.app) to check to test.
-<br>
-
 ## Project setup
 ```
 npm install
